@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>OMR Vision Studio Pro</title>
+
+  <!-- External Stylesheet (Part 2) -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Core QR Vision CDNs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+
+  <!-- Core Script (Part 3) -->
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- ================= TOP NAVIGATION ================= -->
+  <nav class="app-nav">
+    <div class="nav-brand">
+      <svg class="brand-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3M9 12l2 2 4-4"/>
+      </svg>
+      <span>OMR VISION STUDIO</span>
+      <span class="badge-pro">PRO</span>
+    </div>
+
+    <!-- Mode Switcher -->
+    <div class="mode-switch">
+      <button class="mode-btn active" id="btn-mode-laptop">
+        <span class="btn-icon">💻</span> Laptop (Sheet)
+      </button>
+      <button class="mode-btn" id="btn-mode-mobile">
+        <span class="btn-icon">📱</span> Mobile (Scanner)
+      </button>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN VIEWPORT CONTAINER ================= -->
+  <main class="main-container">
+
+    <!-- -------------------------------------------------------- -->
+    <!-- VIEW 1: LAPTOP VIEWPORT (VIRTUAL SHEET & 3D FLIP CARD)  -->
+    <!-- -------------------------------------------------------- -->
+    <section id="view-laptop" class="viewport-section">
+      
+      <!-- Toolbar Controls -->
+      <div class="toolbar">
+        <button class="btn btn-primary" id="btn-next-sheet" title="Shortcut: Spacebar">
+          ⚡ Next Sheet <span class="kbd-hint">Space</span>
+        </button>
+        <button class="btn btn-secondary" id="btn-blank-sheet">
+          Clear Bubbles
+        </button>
+        <button class="btn btn-accent" id="btn-flip-sheet" title="Shortcut: Key F">
+          🔄 Flip Key/Sheet <span class="kbd-hint">F</span>
+        </button>
+      </div>
+
+      <!-- 3D Perspective Card Wrapper -->
+      <div class="flip-scene">
+        <div class="flip-card" id="sheet-flip-card">
+
+          <!-- FRONT SIDE: CANDIDATE OMR TEST SHEET -->
+          <div class="flip-face flip-front">
+            <!-- Corner Fiducial Markers for Optical Framing -->
+            <div class="corner-marker marker-tl"></div>
+            <div class="corner-marker marker-tr"></div>
+            <div class="corner-marker marker-bl"></div>
+            <div class="corner-marker marker-br"></div>
+
+            <div class="sheet-header">
+              <h2 class="sheet-title">OFFICIAL TEST SHEET</h2>
+              <p class="sheet-sub">CANDIDATE RESPONSE MATRIX</p>
+            </div>
+
+            <!-- Optical Anchor QR Code -->
+            <div class="qr-wrapper">
+              <div id="qrcode-box"></div>
+              <div class="roll-display" id="sheet-roll-text">ROLL-1001</div>
+            </div>
+
+            <!-- OMR Questions Matrix (Q1 to Q5) -->
+            <div class="omr-matrix">
+              <!-- Q1 -->
+              <div class="omr-row" data-q="1">
+                <span class="q-label">Q1</span>
+                <div class="bubble" data-opt="A">A</div>
+                <div class="bubble" data-opt="B">B</div>
+                <div class="bubble" data-opt="C">C</div>
+                <div class="bubble" data-opt="D">D</div>
+              </div>
+              <!-- Q2 -->
+              <div class="omr-row" data-q="2">
+                <span class="q-label">Q2</span>
+                <div class="bubble" data-opt="A">A</div>
+                <div class="bubble" data-opt="B">B</div>
+                <div class="bubble" data-opt="C">C</div>
+                <div class="bubble" data-opt="D">D</div>
+              </div>
+              <!-- Q3 -->
+              <div class="omr-row" data-q="3">
+                <span class="q-label">Q3</span>
+                <div class="bubble" data-opt="A">A</div>
+                <div class="bubble" data-opt="B">B</div>
+                <div class="bubble" data-opt="C">C</div>
+                <div class="bubble" data-opt="D">D</div>
+              </div>
+              <!-- Q4 -->
+              <div class="omr-row" data-q="4">
+                <span class="q-label">Q4</span>
+                <div class="bubble" data-opt="A">A</div>
+                <div class="bubble" data-opt="B">B</div>
+                <div class="bubble" data-opt="C">C</div>
+                <div class="bubble" data-opt="D">D</div>
+              </div>
+              <!-- Q5 -->
+              <div class="omr-row" data-q="5">
+                <span class="q-label">Q5</span>
+                <div class="bubble" data-opt="A">A</div>
+                <div class="bubble" data-opt="B">B</div>
+                <div class="bubble" data-opt="C">C</div>
+                <div class="bubble" data-opt="D">D</div>
+              </div>
+            </div>
+
+            <div class="sheet-footer">
+              <span>● 100% COMPLETE BOUNDARY VERIFIED ●</span>
+            </div>
+          </div>
+
+          <!-- BACK SIDE: OFFICIAL MASTER ANSWER KEY & SOLUTIONS -->
+          <div class="flip-face flip-back">
+            <div class="sheet-header">
+              <h2 class="sheet-title key-title">OFFICIAL ANSWER KEY</h2>
+              <p class="sheet-sub">MASTER EVALUATION BENCHMARK</p>
+            </div>
+
+            <div class="key-summary-badge">
+              <span>SET: CODE-A</span>
+              <span>TOTAL MARKS: 5.0</span>
+            </div>
+
+            <div class="key-matrix" id="key-display-matrix">
+              <!-- Dynamically mapped correct options (Q1..Q5) -->
+              <div class="key-row">
+                <span class="k-label">Q1</span>
+                <span class="k-val" id="key-q1">B</span>
+                <span class="k-desc">Physics (Vector Mechanics)</span>
+              </div>
+              <div class="key-row">
+                <span class="k-label">Q2</span>
+                <span class="k-val" id="key-q2">A</span>
+                <span class="k-desc">Chemistry (Equilibrium)</span>
+              </div>
+              <div class="key-row">
+                <span class="k-label">Q3</span>
+                <span class="k-val" id="key-q3">C</span>
+                <span class="k-desc">Maths (Matrices & Calc)</span>
+              </div>
+              <div class="key-row">
+                <span class="k-label">Q4</span>
+                <span class="k-val" id="key-q4">D</span>
+                <span class="k-desc">Logic (Pattern Inference)</span>
+              </div>
+              <div class="key-row">
+                <span class="k-label">Q5</span>
+                <span class="k-val" id="key-q5">A</span>
+                <span class="k-desc">Biology / Fundamental</span>
+              </div>
+            </div>
+
+            <div class="key-footer">
+              <p>Click "Flip Key/Sheet" or press <b>F</b> to return</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------- -->
+    <!-- VIEW 2: MOBILE VIEWPORT (CAMERA VISION & LOG RESCAN)     -->
+    <!-- -------------------------------------------------------- -->
+    <section id="view-mobile" class="viewport-section hidden">
+      
+      <!-- Video Viewfinder with AR Overlay -->
+      <div class="viewfinder-card">
+        <video id="video" playsinline muted></video>
+        <canvas id="ar-canvas"></canvas>
+
+        <!-- Viewfinder Live Heads-Up Display (HUD) -->
+        <div class="hud-top">
+          <span class="hud-badge status-idle" id="hud-status">Point at Sheet</span>
+          <span class="hud-badge status-indicator" id="hud-lock">IDLE</span>
+        </div>
+        <div class="hud-bottom">
+          <span class="hud-tip" id="hud-tip">Hold camera perpendicular to screen</span>
+        </div>
+      </div>
+
+      <!-- Active Scan Output Card -->
+      <div class="result-card">
+        <div class="result-meta">
+          <span class="meta-label">LAST EVALUATED SHEET</span>
+          <span class="meta-time" id="res-timestamp">--:--:--</span>
+        </div>
+        <div class="result-main">
+          <div class="res-roll" id="res-roll">Awaiting Scan...</div>
+          <div class="res-score" id="res-score">--</div>
+        </div>
+        <div class="res-responses" id="res-ans">Responses: --</div>
+      </div>
+
+      <!-- Scanned History & Rescan Management Table -->
+      <div class="history-card">
+        <div class="history-header">
+          <div class="history-title">
+            <h3>Verified Evaluations</h3>
+            <span class="count-pill" id="total-count">0</span>
+          </div>
+          <button class="btn btn-sm btn-secondary" id="btn-export-csv">
+            Export CSV
+          </button>
+        </div>
+
+        <div class="table-scroll">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Roll ID</th>
+                <th>Score</th>
+                <th>Marked</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="log-tbody">
+              <!-- Scanned records with Delete/Rescan button dynamically inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
