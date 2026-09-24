@@ -1,0 +1,668 @@
+/* =========================================================
+   OMR VISION STUDIO PRO - DESIGN SYSTEM & 3D CSS ENGINE
+   Theme: Minimalist White / Apple Silicon Aesthetic
+   ========================================================= */
+
+:root {
+  --bg-app: #f8fafc;
+  --bg-card: #ffffff;
+  --border-light: #e2e8f0;
+  --border-sheet: #000000;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  
+  --accent-black: #000000;
+  --accent-blue: #0284c7;
+  --accent-green: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  --shadow-sheet: 0 20px 35px -10px rgba(0, 0, 0, 0.08);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+/* =========================================================
+   1. NAVIGATION BAR
+   ========================================================= */
+.app-nav {
+  width: 100%;
+  max-width: 960px;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.brand-icon {
+  stroke: var(--accent-black);
+}
+
+.badge-pro {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--accent-black);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+}
+
+.mode-switch {
+  display: flex;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: var(--radius-md);
+  gap: 2px;
+}
+
+.mode-btn {
+  border: none;
+  background: transparent;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: calc(var(--radius-md) - 2px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mode-btn.active {
+  background: var(--bg-card);
+  color: var(--text-main);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Main Container Layout */
+.main-container {
+  width: 100%;
+  max-width: 960px;
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.viewport-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================================================
+   2. BUTTONS & CONTROLS TOOLBAR
+   ========================================================= */
+.toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  border: none;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--accent-black);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #262626;
+}
+
+.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+}
+
+.btn-secondary:hover {
+  background: #f1f5f9;
+}
+
+.btn-accent {
+  background: #f1f5f9;
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+}
+
+.btn-accent:hover {
+  background: #e2e8f0;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 11px;
+  border-radius: var(--radius-sm);
+}
+
+.kbd-hint {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.08);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.btn-primary .kbd-hint {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================================
+   3. 3D FLIP CARD ENGINE (LAPTOP VIEW)
+   ========================================================= */
+.flip-scene {
+  width: 350px;
+  min-height: 520px;
+  perspective: 1200px; /* High-definition 3D depth */
+  position: relative;
+}
+
+.flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Flipped State toggled by class */
+.flip-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  width: 100%;
+  background: #ffffff;
+  border: 2px solid var(--border-sheet);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  box-shadow: var(--shadow-sheet);
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+  background: #fafafa;
+}
+
+/* Optical Fiducial Markers */
+.corner-marker {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #000000;
+}
+.marker-tl { top: 8px; left: 8px; }
+.marker-tr { top: 8px; right: 8px; }
+.marker-bl { bottom: 8px; left: 8px; }
+.marker-br { bottom: 8px; right: 8px; }
+
+/* Sheet Typography */
+.sheet-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.sheet-title {
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.sheet-sub {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* QR Code Display */
+.qr-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+#qrcode-box {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+#qrcode-box img {
+  display: block;
+}
+
+.roll-display {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin-top: 6px;
+}
+
+/* =========================================================
+   4. OMR BUBBLE MATRIX (TOGGLEABLE & UNTICKABLE)
+   ========================================================= */
+.omr-matrix {
+  border-top: 2px solid var(--border-sheet);
+  border-bottom: 2px solid var(--border-sheet);
+  padding: 10px 0;
+}
+
+.omr-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  padding: 0 4px;
+}
+
+.q-label {
+  font-size: 15px;
+  font-weight: 800;
+  width: 28px;
+  text-align: left;
+}
+
+.bubble {
+  width: 35px;
+  height: 35px;
+  border: 2px solid var(--border-sheet);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  background: #ffffff;
+  color: var(--text-main);
+  transition: background-color 0.1s ease, color 0.1s ease, transform 0.05s ease;
+}
+
+.bubble:active {
+  transform: scale(0.92);
+}
+
+/* Filled / Dark Ink State */
+.bubble.filled {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.sheet-footer {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--text-light);
+}
+
+/* =========================================================
+   5. BACK FACE: ANSWER KEY DETAILS
+   ========================================================= */
+.key-title {
+  color: var(--accent-black);
+}
+
+.key-summary-badge {
+  display: flex;
+  justify-content: space-between;
+  background: #f1f5f9;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.key-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1.5px solid var(--border-light);
+  border-bottom: 1.5px solid var(--border-light);
+  padding: 14px 0;
+}
+
+.key-row {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  gap: 12px;
+}
+
+.k-label {
+  font-weight: 800;
+  width: 25px;
+}
+
+.k-val {
+  width: 26px;
+  height: 26px;
+  background: var(--accent-green);
+  color: #ffffff;
+  font-weight: 900;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.k-desc {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.key-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   6. MOBILE SCANNER VIEWPORT & AR OVERLAY
+   ========================================================= */
+.viewfinder-card {
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 3/4;
+  position: relative;
+  background: #000000;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-light);
+}
+
+#video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#ar-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hud-top {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.hud-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+}
+
+.status-idle {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.status-indicator {
+  background: rgba(0, 0, 0, 0.65);
+  letter-spacing: 0.05em;
+}
+
+.hud-bottom {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  text-align: center;
+  z-index: 10;
+}
+
+.hud-tip {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.55);
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+}
+
+/* Active Evaluation Result Card */
+.result-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-top: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.result-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.result-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 6px 0;
+}
+
+.res-roll {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.res-score {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--accent-green);
+}
+
+.res-responses {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* =========================================================
+   7. SCANNED LOG & RESCAN / DELETE ACTIONS
+   ========================================================= */
+.history-card {
+  width: 100%;
+  max-width: 440px;
+  margin-top: 24px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.history-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-title h3 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.count-pill {
+  font-size: 11px;
+  font-weight: 700;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+}
+
+.table-scroll {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.history-table th, 
+.history-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.history-table th {
+  background: #f8fafc;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.history-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Rescan / Cut Button */
+.btn-action-del {
+  border: none;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-action-del:hover {
+  background: #fca5a5;
+  color: #b91c1c;
+}
+
+.status-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.tag-pass { background: #dcfce7; color: #15803d; }
+.tag-fail { background: #fee2e2; color: #b91c1c; }
